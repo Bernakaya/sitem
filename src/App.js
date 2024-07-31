@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';  // React ve useRef aynı satırda import edilir
 import './App.css';
 import logom from './image/logom.png';
 import resim1 from './image/resim1.jpg';
@@ -9,37 +9,27 @@ import SkillBar from './SkillBar';
 import { Link, Element, scroller } from 'react-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import emailjs from '@emailjs/browser';
 
 function App() {
-  const handleSubmit = async (e) => {
+  
+  const form = useRef();
+
+  const sendEmail = (e) => {
     e.preventDefault();
-    
-    const form = e.target;
-    const formData = {
-      name: form.name.value,
-      email: form.email.value,
-      phone: form.phone.value,
-      message: form.message.value
-    };
 
-    try {
-      const response = await fetch('http://localhost:5000/send', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
+    emailjs
+      .sendForm('service_x2pov0u', 'template_k3ob8nl', form.current, {
+        publicKey: 'db7uibhoVOi4sPphT',
+      })
+      .then(
+        () => {
+          alert('SUCCESS!');
         },
-        body: JSON.stringify(formData)
-      });
-
-      if (response.ok) {
-        alert('Mesaj gönderildi!');
-        form.reset();
-      } else {
-        alert('Mesaj gönderilemedi.');
-      }
-    } catch (error) {
-      alert('Hata oluştu: ' + error.message);
-    }
+        (error) => {
+        alert('FAILED...', error.text);
+        },
+      );
   };
 
   const toggleMenu = () => {
@@ -137,28 +127,27 @@ function App() {
       </Element>
 
       <Element name="iletisim" className='contact-form-container'>
-  <h1> İletişim</h1>
-  <form className='contact-form' onSubmit={handleSubmit}>
-    <label>
-      Ad Soyad *
-      <input type="text" name="name" required />
-    </label>
-    <label>
-      E-mail *
-      <input type="email" name="email" required />
-    </label>
-    <label>
-      İletişim Numarası *
-      <input type="tel" name="phone" required />
-    </label>
-   
-    <label>
-      Mesaj *
-      <textarea name="message" required></textarea>
-    </label>
-    <button type="submit">Gönder</button>
-  </form>
-</Element>
+        <h1>İletişim</h1>
+        <form className='contact-form' ref={form} onSubmit={sendEmail}>
+          <label>
+            Ad Soyad *
+            <input type="text" name="name" required />
+          </label>
+          <label>
+            E-mail *
+            <input type="email" name="email" required />
+          </label>
+          <label>
+            İletişim Numarası *
+            <input type="tel" name="phone" required />
+          </label>
+          <label>
+            Mesaj *
+            <textarea name="message" required></textarea>
+          </label>
+          <button type="submit">Gönder</button>
+        </form>
+      </Element>
 
       <footer>
         <h2>SOCIAL MEDIA</h2>
