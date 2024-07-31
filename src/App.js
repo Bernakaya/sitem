@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';  // React ve useRef aynı satırda import edilir
+import React, { useRef, useState } from 'react';  // React ve useRef aynı satırda import edilir
 import './App.css';
 import logom from './image/logom.png';
 import resim1 from './image/resim1.jpg';
@@ -14,27 +14,27 @@ import emailjs from '@emailjs/browser';
 function App() {
   
   const form = useRef();
+  const [isMenuOpen, setMenuOpen] = useState(false);
 
   const sendEmail = (e) => {
     e.preventDefault();
 
     emailjs
-    .sendForm(process.env.REACT_APP_EMAILJS_SERVICE_ID, process.env.REACT_APP_EMAILJS_TEMPLATE_ID, form.current, {
-      publicKey: process.env.REACT_APP_EMAILJS_PUBLIC_KEY,
-    })
-    .then(
-      () => {
-        alert('SUCCESS!');
-      },
-      (error) => {
-        alert('FAILED...', error.text);
-      },
-    );}
-  
+      .sendForm(process.env.REACT_APP_EMAILJS_SERVICE_ID, process.env.REACT_APP_EMAILJS_TEMPLATE_ID, form.current, {
+        publicKey: process.env.REACT_APP_EMAILJS_PUBLIC_KEY,
+      })
+      .then(
+        () => {
+          alert('SUCCESS!');
+        },
+        (error) => {
+          alert('FAILED...', error.text);
+        }
+      );
+  };
 
   const toggleMenu = () => {
-    const menu = document.getElementById('mobile-menu');
-    menu.classList.toggle('open');
+    setMenuOpen(!isMenuOpen);
   };
 
   const scrollToElement = (elementName) => {
@@ -53,7 +53,7 @@ function App() {
           <i className="fas fa-bars"></i>
         </button>
         <nav>
-          <ul className='nav-list' id='mobile-menu'>
+          <ul className={`nav-list ${isMenuOpen ? 'open' : ''}`} id='mobile-menu'>
             <li>
               <Link to="anasayfa" smooth={true} duration={500}>
                 Ana Sayfa
@@ -117,13 +117,14 @@ function App() {
 
       <Element name="yetkinliklerim" className='skills-container'>
         <h1>YETKİNLİKLER</h1>
-        <SkillBar title="C#" percentage={5} color="orange" />
-        <SkillBar title="PHP" percentage={70} color="red" />
-        <SkillBar title="MySQL" percentage={80} color="purple" />
-        <SkillBar title="HTML5" percentage={95} color="blue" />
-        <SkillBar title="Bootstrap5" percentage={99} color="purple" />
-        <SkillBar title="React" percentage={10} color="orange" />
-        <SkillBar title="React Native" percentage={20} color="gray" />
+      
+        <SkillBar title="PHP" percentage={40} color="red" />
+        <SkillBar title="MySQL" percentage={
+          20} color="purple" />
+        <SkillBar title="HTML5" percentage={80} color="blue" />
+        <SkillBar title="Bootstrap5" percentage={80} color="purple" />
+        <SkillBar title="React" percentage={25} color="orange" />
+        <SkillBar title="React Native" percentage={10} color="gray" />
       </Element>
 
       <Element name="iletisim" className='contact-form-container'>
