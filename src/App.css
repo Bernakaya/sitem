@@ -1,38 +1,397 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+/* Genel Stiller */
+body {
+  background-color: #A3A398;
+  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Header */
+.header {
+  background-color: #C9C9BC;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  width: 120px;
+  height: 80px;
+}
+
+.menu-toggle {
+  display: none; /* Masaüstü görünümünde gizli */
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.nav-list {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list li {
+  margin: 0 15px;
+}
+
+.nav-list li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  padding-bottom: 5px;
+  position: relative;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  margin-right: 25px;
+}
+
+.nav-list li a::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #A3A398;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: width 0.3s ease;
+}
+
+.nav-list li a:hover::after {
+  width: 100%;
+}
+
+.nav-list li a:hover {
+  color: #A3A398;
+}
+
+
+
+
+
+/* Giriş Sayfası */
+.intro-content {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.resim-gif-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Taşan kısımların görünmemesi için */
+}
+
+.resim1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Resmin kapsayıcıyı doldurmasını sağlar */
+  opacity: 0.3;
+  z-index: 1;
+}
+
+.intro-text {
+  position: relative;
+  z-index: 2;
+  color: black;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.intro-text h1, .intro-text h2 {
+  animation: textAnimation 5s infinite alternate;
+}
+
+.intro-text h1 {
+  font-size: 4em;
+  margin-bottom: 20px;
+}
+
+.intro-text h2 {
+  font-size: 2.5em;
+}
+
+
+
+
+/* Scroll Down Butonu */
+.scroll-down-button {
+  margin: 20px auto; /* Butonu yatayda ortala */
+  padding: 10px; /* İç boşluk */
+  background-color: black; /* Butonun arka plan rengi */
+  color: white; /* İkonun rengi */
+  border: none; /* Butonun kenarlığı */
+  border-radius: 50%; /* Butonu daire yapmak için kenarları yuvarla */
+  width: 50px; /* Butonun genişliği */
+  height: 50px; /* Butonun yüksekliği */
+  display: flex; /* Flexbox kullanarak içerik hizalama */
+  align-items: center; /* Dikey olarak ortala */
+  justify-content: center; /* Yatay olarak ortala */
+  cursor: pointer; /* Fare imlecini göster */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Gölgelendirme ekle */
+  transition: background-color 0.3s ease; /* Arka plan rengini geçiş yaparken animasyon ekle */
+  z-index: 10; /* Üst üste binen öğeler arasında önceliği belirle */
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 1.5s infinite; /* İkonun yukarı ve aşağı hareketi */
+}
+
+.scroll-down-button:hover {
+  background-color: #333; /* Üzerine gelindiğinde arka plan rengini değiştir */
+}
+
+.scroll-down-button .fa-arrow-down {
+  font-size: 24px; /* İkonun boyutu */
+  animation: colorChange 1.5s infinite; /* İkonun renk değişimini yap */
+}
+
+/* İkonun renk değişimini yapacak animasyon */
+@keyframes colorChange {
+  0% {
+    color: white;
+  }
+  50% {
+    color: #A3A398; /* Farklı bir renk */
+  }
+  100% {
+    color: white;
+  }
+}
+
+/* İkonun yukarı ve aşağı hareketini yapacak animasyon */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+
+
+
+/* Animasyon */
+@keyframes textAnimation {
+  0% {
+    transform: translateY(0);
+    color: black;
+  }
+  50% {
+    transform: translateY(-10px);
+    color: #A3A398; /* Farklı bir renk */
+  }
+  100% {
+    transform: translateY(0);
+    color: black;
+  }
+}
+
+
+
+
+
+
+/* Ben Kimim ve Eğitim Kısımları */
+.shadow-box {
+  background-color: #C9C9BC;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 1000px;
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-pic, .education-pic {
+  width: 150px;
+  height: 200px;
+  margin-top: 60px;
+}
+
+.text-content {
+  flex: 1;
+  text-align: center;
+  margin-top: 80px;
+  font-size: 20px;
+}
+
+
+
+
+
+/* Yetkinlikler Kısmı */
+.skills-container {
+  background-color: #C9C9BC;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 1000px;
+  height: 70vh;
+  text-align: center;
+  padding-top: 200px;
+}
+
+
+
+
+
+
+/* İletişim Formu */
+.contact-form-container {
+  background-color: #C9C9BC;
+  color: black;
+  padding: 20px;
+  border-radius: 8px;
+  width: 1000px;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Merkezi hizalama */
+}
+
+.contact-form-container h1 {
+  color: black;
+  padding: 10px;
+  text-align: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  width: 100%; /* Başlığın tam genişlikte görünmesi için */
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 50%; /* Formun tam genişlikte görünmesi için */
+}
+
+.contact-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: black; /* Label yazı rengini siyah yap */
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 100%; /* Girdilerin tam genişlikte görünmesi için */
+  color: black; /* Girdi içeriği yazı rengini siyah yap */
+}
+
+.contact-form button {
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+  background-color: #A3A398;
   color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100px; /* Butonun genişliğini ayarlamak için */
+  align-self: center; /* Butonu ortalamak için */
 }
 
-.App-link {
-  color: #61dafb;
+.contact-form button:hover {
+  background-color: #C9C9BC;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+
+
+
+
+
+
+/* Mobil Menü */
+@media (max-width: 768px) {
+  .nav-list {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    background-color: #C9C9BC;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    padding: 10px 0;
   }
-  to {
-    transform: rotate(360deg);
+
+  .nav-list.open {
+    display: flex; /* Menü açıldığında görünür */
   }
+
+  .menu-toggle {
+    display: block; /* Menü ikonunu mobil görünümde gösterir */
+  }
+}
+
+/* Footer */
+footer {
+  background-color:  #C9C9BC;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  width: 100%;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 70px;
+}
+
+footer h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+footer hr {
+  width: 50%;
+  margin: 10px auto;
+  border: 1px solid white;
+}
+
+footer .social-icons a {
+  color: white;
+  margin: 0 15px;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+footer .social-icons a:hover {
+  color: #ddd;
 }
