@@ -19,18 +19,18 @@ function App() {
     e.preventDefault();
 
     emailjs
-      .sendForm('service_x2pov0u', 'template_k3ob8nl', form.current, {
-        publicKey: 'db7uibhoVOi4sPphT',
-      })
-      .then(
-        () => {
-          alert('SUCCESS!');
-        },
-        (error) => {
+    .sendForm(process.env.REACT_APP_EMAILJS_SERVICE_ID, process.env.REACT_APP_EMAILJS_TEMPLATE_ID, form.current, {
+      publicKey: process.env.REACT_APP_EMAILJS_PUBLIC_KEY,
+    })
+    .then(
+      () => {
+        alert('SUCCESS!');
+      },
+      (error) => {
         alert('FAILED...', error.text);
-        },
-      );
-  };
+      },
+    );}
+  
 
   const toggleMenu = () => {
     const menu = document.getElementById('mobile-menu');
